@@ -1,0 +1,31 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: Pablo-man/3api
+          path: 3api
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install
+        working-directory: 3api
+
+      - name: Install Railway
+        run: npm i -g @railway/cli
+
+      - name: Deploy
+        run: railway up --service 3api
+        working-directory: 3api
+        env:
+          RAILWAY_TOKEN: ${{ secrets.TOKEN3 }}
