@@ -1,0 +1,41 @@
+---
+const nav= ['Name']
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>Users</title>
+        <style>
+            .title{
+                color: orangered;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="title">Characters</h1>
+            {
+            nav.map((elem)=> {
+
+            return <spam>{elem}</spam>
+
+            })
+            }
+        <div id="list"></div>
+        <script>
+            fetch('https://swapi.dev/api/planets')
+            .then(response => response.json())
+            .then(data => {
+                const charactersDiv= document.getElementById('list');
+                data.results.forEach(element => {
+                    const p= document.createElement('p');
+                    p.innerText= element.name;
+                    charactersDiv.appendChild(p);
+                });
+            });
+
+        </script>
+    </body>
+</html>
